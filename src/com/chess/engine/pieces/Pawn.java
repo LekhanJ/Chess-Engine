@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.chess.engine.board.Move.*;
+
 public class Pawn extends Piece {
 
     private final static int[] CANDIDATE_MOVE_OFFSETS = {8, 16};
@@ -31,8 +33,15 @@ public class Pawn extends Piece {
             }
 
             if (currentOffset == 8 && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
-                // Need more work
-                legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                // TODO Need more work
+                legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
+            } else if (currentOffset == 16 && this.isFirstMove() && ((BoardUtils.SECOND_ROW[this.piecePosition] && this.getPieceAlliance().isBlack()) || (BoardUtils.SEVENTH_ROW[this.piecePosition] && this.getPieceAlliance().isWhite()))) {
+
+                final int behindCandidateDestinationCoordinate = this.piecePosition + (this.pieceAlliance.getDirection() * 8);
+
+                if (!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied() && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
+                    legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
+                }
             }
         }
 
