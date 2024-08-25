@@ -16,7 +16,7 @@ public class Pawn extends Piece {
 
     private final static int[] CANDIDATE_MOVE_OFFSETS = {8, 16, 7, 9};
 
-    private Pawn(final int piecePosition, final Alliance pieceAlliance) {
+    public Pawn(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -66,4 +66,8 @@ public class Pawn extends Piece {
         return ImmutableList.copyOf(legalMoves);
     }
 
+    @Override
+    public String toString() {
+        return this.pieceAlliance.isWhite() ? PieceType.WHITEPAWN.toString() : PieceType.BLACKPAWN.toString();
+    }
 }

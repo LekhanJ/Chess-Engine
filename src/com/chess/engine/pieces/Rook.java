@@ -15,7 +15,7 @@ public class Rook extends Piece {
 
     private final static int[] CANDIDATE_MOVE_VECTOR_OFFSETS = {-8, -1, 1, 8};
 
-    private Rook(final int piecePosition, final Alliance pieceAlliance) {
+    public Rook(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -52,6 +52,11 @@ public class Rook extends Piece {
         }
 
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public String toString() {
+        return this.pieceAlliance.isWhite() ? PieceType.WHITEROOK.toString() : PieceType.BLACKROOK.toString();
     }
 
     // to check if the rook is in the first column

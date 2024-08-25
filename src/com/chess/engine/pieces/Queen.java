@@ -15,7 +15,7 @@ public class Queen extends Piece {
 
     private final static int[] CANDIDATE_MOVE_VECTOR_OFFSETS = {-9, -8, -7, -1, 1, 7, 8, 9};
 
-    private Queen(final int piecePosition, final Alliance pieceAlliance) {
+    public Queen(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -52,6 +52,11 @@ public class Queen extends Piece {
         }
 
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public String toString() {
+        return this.pieceAlliance.isWhite() ? PieceType.WHITEQUEEN.toString() : PieceType.BLACKQUEEN.toString();
     }
 
     // to check if the queen is in the first column

@@ -15,7 +15,7 @@ public class Bishop extends Piece {
 
     private final static int[] CANDIDATE_MOVE_VECTOR_OFFSETS = {-9, -7, 7, 9};
 
-    private Bishop(final int piecePosition, final Alliance pieceAlliance) {
+    public Bishop(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -53,6 +53,11 @@ public class Bishop extends Piece {
         }
 
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public String toString() {
+        return this.pieceAlliance.isWhite() ? PieceType.WHITEBISHOP.toString() : PieceType.BLACKBISHOP.toString();
     }
 
     // to check if the bishop is in the first column

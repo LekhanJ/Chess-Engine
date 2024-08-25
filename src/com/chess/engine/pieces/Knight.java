@@ -16,7 +16,7 @@ public class Knight extends Piece {
 
     private final static int[] CANDIDATE_MOVE_OFFSETS = {-17, -15, -10, -6, 6, 10, 15, 17};
 
-    private Knight(final int piecePosition, final Alliance pieceAlliance) {
+    public Knight(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -49,6 +49,11 @@ public class Knight extends Piece {
         }
 
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public String toString() {
+        return this.pieceAlliance.isWhite() ? PieceType.WHITEKNIGHT.toString() : PieceType.BLACKKNIGHT.toString();
     }
 
     // to check if the knight is in the first column
