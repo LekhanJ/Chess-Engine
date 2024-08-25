@@ -14,7 +14,7 @@ import com.chess.engine.board.Move.*;
 
 public class Pawn extends Piece {
 
-    private final static int[] CANDIDATE_MOVE_OFFSETS = {8, 16};
+    private final static int[] CANDIDATE_MOVE_OFFSETS = {8, 16, 7, 9};
 
     private Pawn(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
@@ -26,25 +26,44 @@ public class Pawn extends Piece {
         final List<Move> legalMoves = new ArrayList<>();
 
         for (final int currentOffset : CANDIDATE_MOVE_OFFSETS) {
-            final int candidateDestinationCoordinate = this.piecePosition + (currentOffset * this.getPieceAlliance().getDirection());
+            int candidateDestinationCoordinate = this.piecePosition + (currentOffset * this.getPieceAlliance().getDirection());
 
             if (!BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
                 continue;
             }
 
             if (currentOffset == 8 && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
-                // TODO Need more work
+                // TODO need more work
                 legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
-            } else if (currentOffset == 16 && this.isFirstMove() && ((BoardUtils.SECOND_ROW[this.piecePosition] && this.getPieceAlliance().isBlack()) || (BoardUtils.SEVENTH_ROW[this.piecePosition] && this.getPieceAlliance().isWhite()))) {
-
+            } else if (currentOffset == 16 && this.isFirstMove() && ((BoardUtils.SECOND_ROW[this.piecePosition] && this.pieceAlliance.isBlack()) || (BoardUtils.SEVENTH_ROW[this.piecePosition] && this.pieceAlliance.isWhite()))) {
                 final int behindCandidateDestinationCoordinate = this.piecePosition + (this.pieceAlliance.getDirection() * 8);
 
                 if (!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied() && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                     legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
+                }
+            } else if (currentOffset == 7 && !((BoardUtils.FIRST_COLUMN[this.piecePosition] && this.pieceAlliance.isBlack()) || (BoardUtils.EIGHTH_COLUMN[this.piecePosition] && this.pieceAlliance.isWhite()))) {
+                if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
+                    final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
+
+                    if (this.pieceAlliance != pieceOnCandidate.pieceAlliance) {
+                        // TODO need more work
+                        legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
+                    }
+                }
+
+            } else if (currentOffset == 9 && !((BoardUtils.FIRST_COLUMN[this.piecePosition] && this.pieceAlliance.isWhite()) || (BoardUtils.EIGHTH_COLUMN[this.piecePosition] && this.pieceAlliance.isBlack()))) {
+                if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
+                    final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
+
+                    if (this.pieceAlliance != pieceOnCandidate.pieceAlliance) {
+                        // TODO need more work
+                        legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
+                    }
                 }
             }
         }
 
         return ImmutableList.copyOf(legalMoves);
     }
+
 }
