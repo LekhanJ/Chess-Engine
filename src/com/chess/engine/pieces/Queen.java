@@ -16,7 +16,7 @@ public class Queen extends Piece {
     private final static int[] CANDIDATE_MOVE_VECTOR_OFFSETS = {-9, -8, -7, -1, 1, 7, 8, 9};
 
     public Queen(final int piecePosition, final Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+        super(PieceType.QUEEN, piecePosition, pieceAlliance);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Queen extends Piece {
 
     @Override
     public String toString() {
-        return this.pieceAlliance.isWhite() ? PieceType.WHITEQUEEN.toString() : PieceType.BLACKQUEEN.toString();
+        return PieceType.QUEEN.toString();
     }
 
     // to check if the queen is in the first column

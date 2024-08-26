@@ -17,7 +17,7 @@ public class Knight extends Piece {
     private final static int[] CANDIDATE_MOVE_OFFSETS = {-17, -15, -10, -6, 6, 10, 15, 17};
 
     public Knight(final int piecePosition, final Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+        super(PieceType.KNIGHT, piecePosition, pieceAlliance);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Knight extends Piece {
 
     @Override
     public String toString() {
-        return this.pieceAlliance.isWhite() ? PieceType.WHITEKNIGHT.toString() : PieceType.BLACKKNIGHT.toString();
+        return PieceType.KNIGHT.toString();
     }
 
     // to check if the knight is in the first column

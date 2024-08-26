@@ -17,7 +17,7 @@ public class Pawn extends Piece {
     private final static int[] CANDIDATE_MOVE_OFFSETS = {8, 16, 7, 9};
 
     public Pawn(final int piecePosition, final Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+        super(PieceType.PAWN, piecePosition, pieceAlliance);
     }
 
     @Override
@@ -68,6 +68,6 @@ public class Pawn extends Piece {
 
     @Override
     public String toString() {
-        return this.pieceAlliance.isWhite() ? PieceType.WHITEPAWN.toString() : PieceType.BLACKPAWN.toString();
+        return PieceType.PAWN.toString();
     }
 }
