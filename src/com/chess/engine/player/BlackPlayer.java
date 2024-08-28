@@ -6,6 +6,7 @@ import com.chess.engine.board.Move;
 import com.chess.engine.pieces.Piece;
 
 import java.util.Collection;
+import java.util.List;
 
 public class BlackPlayer extends Player {
     public BlackPlayer(final Board board, final Collection<Move> whiteStandardLegalMoves, final Collection<Move> blackStandardLegalMoves) {
@@ -25,5 +26,10 @@ public class BlackPlayer extends Player {
     @Override
     public Player getOpponent() {
         return this.board.whitePlayer();
+    }
+
+    @Override
+    protected Collection<Move> calculateKingCastles(Collection<Move> playerLegals, Collection<Move> OpponentsLegals) {
+        return List.of();
     }
 }
