@@ -3,6 +3,7 @@ package com.chess.engine.board;
 import com.chess.engine.pieces.Pawn;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.board.Board.Builder;
+import com.chess.engine.pieces.Rook;
 
 public abstract class Move {
     final Board board;
@@ -191,8 +192,41 @@ public abstract class Move {
 
     static abstract class CastleMove extends Move {
 
-        public CastleMove(final Board board, final Piece movedPiece, final int destinationCoordinate) {
+        protected final Rook castleRook;
+        protected final int castleRookStart;
+        protected final int getCastleRookDestination;
+
+        public CastleMove(final Board board, final Piece movedPiece, final int destinationCoordinate, final Rook castleRook, final int castleRookStart, final int getCastleRookDestination) {
             super(board, movedPiece, destinationCoordinate);
+            this.castleRook = castleRook;
+            this.castleRookStart = castleRookStart;
+            this.getCastleRookDestination = getCastleRookDestination;
+        }
+
+        public Rook getCastleRook() {
+            return this.castleRook;
+        }
+
+        @Override
+        public boolean isCastlingMove() {
+            return true;
+        }
+
+        @Override
+        public Board execute() {
+            final Builder builder = new Builder();
+
+            for (final Piece piece : this.board.currentPlayer().getActivePieces()) {
+                if (!this.movedPiece.equals(piece)) {
+                    builder.setPiece(piece);
+                }
+            }
+
+            for (final Piece piece : this.board.currentPlayer().getOpponent().getActivePieces()) {
+                builder.setPiece(piece);
+            }
+
+            return builder.build();
         }
     }
 
