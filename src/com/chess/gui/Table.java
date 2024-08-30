@@ -23,8 +23,8 @@ public class Table {
     private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400, 350);
     private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10, 10);
-    private final static Color lightTileColor = new Color(242,242,242);
-    private final static Color darkTileColor = new Color(31,31,31);
+    private final static Color lightTileColor = new Color(218, 217, 181);
+    private final static Color darkTileColor = new Color(128, 163, 82);
 
     public Table() {
         this.gameFrame = new JFrame("JChess");
@@ -107,7 +107,7 @@ public class Table {
             if (board.getTile(this.tileId).isTileOccupied()) {
                 String pieceIconPath = "";
                 try {
-                    final BufferedImage image = ImageIO.read(new File(pieceIconPath + board.getTile(this.tileId).getPiece().getPieceAlliance().toString().substring(0, 1) + board.getTile(this.tileId).getPiece().toString() + ".gif"));
+                    final BufferedImage image = ImageIO.read(new File(pieceIconPath + board.getTile(this.tileId).getPiece().getPieceAlliance().toString().charAt(0) + board.getTile(this.tileId).getPiece().toString().charAt(0) + ".png"));
                     add(new JLabel(new ImageIcon(image)));
                 } catch (IOException e) {
                     e.printStackTrace();

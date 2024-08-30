@@ -69,7 +69,7 @@ public abstract class Piece {
     public abstract Piece movePiece(Move move);
 
     public enum PieceType {
-        PAWN("♙") {
+        PAWN("P") {
             @Override
             public boolean isKing() {
                 return false;
@@ -80,7 +80,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        KNIGHT("♘") {
+        KNIGHT("N") {
             @Override
             public boolean isKing() {
                 return false;
@@ -91,7 +91,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        BISHOP("♗") {
+        BISHOP("B") {
             @Override
             public boolean isKing() {
                 return false;
@@ -102,7 +102,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        ROOK("♖") {
+        ROOK("R") {
             @Override
             public boolean isKing() {
                 return false;
@@ -113,7 +113,7 @@ public abstract class Piece {
                 return true;
             }
         },
-        QUEEN("♕") {
+        QUEEN("Q") {
             @Override
             public boolean isKing() {
                 return false;
@@ -124,7 +124,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        KING("♔") {
+        KING("K") {
             @Override
             public boolean isKing() {
                 return true;
