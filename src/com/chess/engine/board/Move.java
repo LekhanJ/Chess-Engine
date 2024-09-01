@@ -67,7 +67,6 @@ public abstract class Move {
 
         // Traversing through all the pieces of current player and placing all the pieces on the new board except the moved piece
         for (final Piece piece : this.board.currentPlayer().getActivePieces()) {
-            // TODO hashcode and equals for pieces
             if (!this.movedPiece.equals(piece)) {
                 builder.setPiece(piece);
             }

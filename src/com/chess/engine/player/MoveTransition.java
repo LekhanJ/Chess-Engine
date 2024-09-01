@@ -3,8 +3,6 @@ package com.chess.engine.player;
 import com.chess.engine.board.Board;
 import com.chess.engine.board.Move;
 
-import java.util.concurrent.Future;
-
 /*
     this class represents that when you make a move the transition from one board to another
     and all the information that you want to carry forth in that.

@@ -14,7 +14,7 @@ import com.chess.engine.board.Move.*;
 
 public class Pawn extends Piece {
 
-    private final static int[] CANDIDATE_MOVE_OFFSETS = {8, 16, 7, 9};
+    private final static int[] CANDIDATE_MOVE_OFFSETS = {7, 8, 9, 16};
 
     public Pawn(final int piecePosition, final Alliance pieceAlliance) {
         super(PieceType.PAWN, piecePosition, pieceAlliance);
@@ -49,7 +49,6 @@ public class Pawn extends Piece {
                         legalMoves.add(new AttackingMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
                     }
                 }
-
             } else if (currentOffset == 9 && !((BoardUtils.FIRST_COLUMN[this.piecePosition] && this.pieceAlliance.isWhite()) || (BoardUtils.EIGHTH_COLUMN[this.piecePosition] && this.pieceAlliance.isBlack()))) {
                 if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
