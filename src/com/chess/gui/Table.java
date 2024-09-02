@@ -46,6 +46,8 @@ public class Table {
     private final static Color lightTileColor = new Color(218, 217, 181);
     private final static Color darkTileColor = new Color(128, 163, 82);
 
+    private boolean highlightLegalMoves;
+
     public Table() {
         this.gameFrame = new JFrame("JChess");
         this.gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,6 +58,7 @@ public class Table {
         this.chessBoard = Board.createStandardBoard();
         this.boardPanel = new BoardPanel();
         this.boardDirection = BoardDirection.NORMAL;
+        this.highlightLegalMoves = true;
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
         this.gameFrame.setVisible(true);
     }
@@ -80,8 +83,6 @@ public class Table {
             }
         });
 
-        fileMenu.add(openPGN);
-
         final JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -90,6 +91,7 @@ public class Table {
             }
         });
 
+        fileMenu.add(openPGN);
         fileMenu.add(exitMenuItem);
 
         return fileMenu;
@@ -107,7 +109,19 @@ public class Table {
                 boardPanel.drawBoard(chessBoard);
             }
         });
+
+        final JCheckBoxMenuItem legalMoveHighlighterCheckbox = new JCheckBoxMenuItem("Highlight Legal Moves", true);
+        legalMoveHighlighterCheckbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                highlightLegalMoves = legalMoveHighlighterCheckbox.isSelected();
+            }
+        });
+
         preferenceMenu.add(flipBoard);
+        preferenceMenu.addSeparator();
+        preferenceMenu.add(legalMoveHighlighterCheckbox);
+
         return preferenceMenu;
     }
 
@@ -262,7 +276,7 @@ public class Table {
         }
 
         private void highlightLegals(final Board board) {
-            if (true) {
+            if (highlightLegalMoves) {
                 for (final Move move : pieceLegalMoves(board)) {
                     if (move.getDestinationCoordinate() == this.tileId) {
                         try {
