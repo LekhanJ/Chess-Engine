@@ -64,6 +64,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public int getPieceValue() {
+        return 9;
+    }
+
+    @Override
     public String toString() {
         return PieceType.QUEEN.toString();
     }

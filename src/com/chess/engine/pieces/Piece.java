@@ -66,6 +66,8 @@ public abstract class Piece {
 
     // Returns a new Piece of same type just with an updated piece position
     public abstract Piece movePiece(Move move);
+    // Return value of a Piece
+    public abstract int getPieceValue();
 
     public enum PieceType {
         PAWN("P") {

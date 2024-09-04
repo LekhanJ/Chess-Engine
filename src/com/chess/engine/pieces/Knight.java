@@ -61,6 +61,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public int getPieceValue() {
+        return 3;
+    }
+
+    @Override
     public String toString() {
         return PieceType.KNIGHT.toString();
     }
