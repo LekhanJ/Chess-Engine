@@ -60,11 +60,6 @@ public class King extends Piece {
     }
 
     @Override
-    public int getPieceValue() {
-        return 10;
-    }
-
-    @Override
     public String toString() {
         return PieceType.KING.toString();
     }

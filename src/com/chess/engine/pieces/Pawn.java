@@ -76,11 +76,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public int getPieceValue() {
-        return 1;
-    }
-
-    @Override
     public String toString() {
         return PieceType.PAWN.toString();
     }
