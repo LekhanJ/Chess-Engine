@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +31,11 @@ import static javax.swing.SwingUtilities.isRightMouseButton;
 public class Table {
 
     private final JFrame gameFrame;
+    private final GameHistoryPanel gameHistoryPanel;
+    private final TakenPiecesPanel takenPiecesPanel;
     private final BoardPanel boardPanel;
+    private final MoveLog moveLog;
+
     private Board chessBoard;
 
     private Tile sourceTile;
@@ -56,10 +61,15 @@ public class Table {
         this.gameFrame.setJMenuBar(tableMenuBar);
         this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
         this.chessBoard = Board.createStandardBoard();
+        this.gameHistoryPanel = new GameHistoryPanel();
+        this.takenPiecesPanel = new TakenPiecesPanel();
         this.boardPanel = new BoardPanel();
+        this.moveLog = new MoveLog();
         this.boardDirection = BoardDirection.NORMAL;
         this.highlightLegalMoves = true;
+        this.gameFrame.add(this.takenPiecesPanel, BorderLayout.WEST);
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
+        this.gameFrame.add(this.gameHistoryPanel, BorderLayout.EAST);
         this.gameFrame.setVisible(true);
     }
 
@@ -68,7 +78,6 @@ public class Table {
         final JMenuBar tableMenuBar = new JMenuBar();
         tableMenuBar.add(createFileMenu());
         tableMenuBar.add(createPreferencesMenu());
-        tableMenuBar.add(createMultiplayerMenu());
         return tableMenuBar;
     }
 
@@ -124,105 +133,6 @@ public class Table {
         preferenceMenu.add(legalMoveHighlighterCheckbox);
 
         return preferenceMenu;
-    }
-
-    // Creates a multiplayer menu
-    private JMenu createMultiplayerMenu() {
-        final JMenu multiplayerMenu = new JMenu("Multiplayer");
-
-        final JMenuItem createRoom = new JMenuItem("Create Room");
-        createRoom.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Create Room");
-                JPanel panel = new JPanel(new GridLayout(4, 2));
-
-                JTextField playerNameField = new JTextField();
-                JTextField roomNameField = new JTextField();
-                JPasswordField roomPasswordField = new JPasswordField();
-
-                panel.add(new JLabel("Player Name:"));
-                panel.add(playerNameField);
-                panel.add(new JLabel("Room Name:"));
-                panel.add(roomNameField);
-                panel.add(new JLabel("Room Password:"));
-                panel.add(roomPasswordField);
-
-                JButton submitButton = new JButton("Create Room");
-                submitButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        String playerName = playerNameField.getText();
-                        String roomName = roomNameField.getText();
-                        String roomPassword = new String(roomPasswordField.getPassword());
-
-                        // Handle room creation logic here
-                        System.out.println("Player Name: " + playerName);
-                        System.out.println("Room Name: " + roomName);
-                        System.out.println("Room Password: " + roomPassword);
-
-                        frame.dispose(); // Close the window
-                    }
-                });
-
-                panel.add(submitButton);
-
-                frame.getContentPane().add(panel);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
-        });
-
-        final JMenuItem joinRoom = new JMenuItem("Join Room");
-        joinRoom.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Join Room");
-                JPanel panel = new JPanel(new GridLayout(4, 2));
-
-                JTextField playerNameField = new JTextField();
-                JTextField roomNameField = new JTextField();
-                JPasswordField roomPasswordField = new JPasswordField();
-
-                panel.add(new JLabel("Player Name:"));
-                panel.add(playerNameField);
-                panel.add(new JLabel("Room Name:"));
-                panel.add(roomNameField);
-                panel.add(new JLabel("Room Password:"));
-                panel.add(roomPasswordField);
-
-                JButton submitButton = new JButton("Join Room");
-                submitButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        String playerName = playerNameField.getText();
-                        String roomName = roomNameField.getText();
-                        String roomPassword = new String(roomPasswordField.getPassword());
-
-                        // Handle room joining logic here
-                        System.out.println("Player Name: " + playerName);
-                        System.out.println("Room Name: " + roomName);
-                        System.out.println("Room Password: " + roomPassword);
-
-                        frame.dispose(); // Close the window
-                    }
-                });
-
-                panel.add(submitButton);
-
-                frame.getContentPane().add(panel);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
-        });
-
-        multiplayerMenu.add(createRoom);
-        multiplayerMenu.addSeparator();
-        multiplayerMenu.add(joinRoom);
-
-        return multiplayerMenu;
     }
 
     public enum BoardDirection {
@@ -348,7 +258,7 @@ public class Table {
                             final MoveTransition transition = chessBoard.currentPlayer().makeMove(move);
                             if (transition.getMoveStatus().isDone()) {
                                 chessBoard = transition.getTransitionBoard();
-                                // TODO add the move that was made to the move log
+                                moveLog.addMove(move);
                             }
                             sourceTile = null;
                             destinationTile = null;
@@ -357,6 +267,8 @@ public class Table {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
+                                gameHistoryPanel.redo(chessBoard, moveLog);
+                                takenPiecesPanel.redo(moveLog);
                                 boardPanel.drawBoard(chessBoard);
                             }
                         });
