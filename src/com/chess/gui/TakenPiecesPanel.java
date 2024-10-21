@@ -76,8 +76,8 @@ public class TakenPiecesPanel extends JPanel {
         for (final Piece takenPiece : whiteTakenPieces) {
             try {
                 final BufferedImage pieceImage = ImageIO.read(new File("./assets/pieces/Matte/" + takenPiece.getPieceAlliance().toString().charAt(0) + takenPiece.toString().charAt(0) + ".png"));
-                final ImageIcon icon = new ImageIcon(pieceImage);
-                final JLabel imageLabel = new JLabel();
+                final ImageIcon pieceIcon = new ImageIcon(pieceImage);
+                final JLabel imageLabel = new JLabel(pieceIcon);
                 this.southPanel.add(imageLabel);
             } catch (final IOException e) {
                 e.printStackTrace();
@@ -87,8 +87,8 @@ public class TakenPiecesPanel extends JPanel {
             try {
                 final BufferedImage pieceImage = ImageIO.read(new File("./assets/pieces/Matte/" + takenPiece.getPieceAlliance().toString().charAt(0) + takenPiece.toString().charAt(0) + ".png"));
                 final ImageIcon pieceIcon = new ImageIcon(pieceImage);
-                final JLabel pieceImageLabel = new JLabel();
-                this.southPanel.add(pieceImageLabel);
+                final JLabel pieceImageLabel = new JLabel(pieceIcon);
+                this.northPanel.add(pieceImageLabel);
             } catch (final IOException e) {
                 e.printStackTrace();
             }

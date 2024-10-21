@@ -317,6 +317,8 @@ public class Table {
                     e.printStackTrace();
                 }
             }
+            revalidate();
+            repaint();
         }
 
         private void highlightLegals(final Board board) {
@@ -324,10 +326,18 @@ public class Table {
                 for (final Move move : pieceLegalMoves(board)) {
                     if (move.getDestinationCoordinate() == this.tileId) {
                         try {
-                            add(new JLabel(new ImageIcon(ImageIO.read(new File("./assets/misc/target3.png")))));
+                            this.removeAll();
+                            if (!move.isAttack())
+                                add(new JLabel(new ImageIcon(ImageIO.read(new File("./assets/misc/target3.png")))));
+                            else {
+                                final BufferedImage image = ImageIO.read(new File(pieceIconPath + board.getTile(this.tileId).getPiece().getPieceAlliance().toString().charAt(0) + board.getTile(this.tileId).getPiece().toString().charAt(0) + "AT" + ".png"));
+                                add(new JLabel(new ImageIcon(image)));
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        revalidate();
+                        repaint();
                     }
                 }
             }

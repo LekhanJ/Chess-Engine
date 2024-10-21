@@ -43,7 +43,7 @@ public class GameHistoryPanel extends JPanel {
             }
         }
 
-        if (moveLog.getMoves().size() > 0) {
+        if (!moveLog.getMoves().isEmpty()) {
             final Move lastMove = moveLog.getMoves().get(moveLog.size() - 1);
             final String moveText = lastMove.toString();
 
